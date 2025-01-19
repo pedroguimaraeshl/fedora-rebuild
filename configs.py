@@ -61,13 +61,13 @@ def grub_before_nvidia(screen_res):
 
             for idx in range(len(GRUB_CFG)):
                 if GRUB_CFG[idx] is not None:
-                    file.write(cat_list[idx] + '\n')
+                    file.write(GRUB_CFG[idx] + '\n')
                 elif idx == 5:
                     line = grep('GRUB_CMDLINE_LINUX', GRUB_FILE)
                     file.write(line + '\n')
                 elif idx == 9:
                     if screen_res == 'fullhd':
-                        file.write(cat_list[idx])
+                        file.write(GRUB_CFG[idx])
                     elif screen_res == 'hd':
                         file.write('GRUB_GFXMODE=1366x768x32,auto')
                     elif screen_res == 'wxga':
