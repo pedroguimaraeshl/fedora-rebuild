@@ -23,6 +23,9 @@
 
 # Importing modules
 import configs as cfg
+from sh import which
 
-#cfg.dnf5()
-cfg.grub_before_nvidia("fullhd")
+result = which('./run_first.sh')
+
+cfg.dnf5()
+#cfg.grub_before_nvidia("fullhd")

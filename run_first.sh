@@ -9,8 +9,8 @@ if [ -d venv ] || [ -d .venv ]; then
     echo "Sucess"
 else
     python -m venv venv
-    sleep 3
+    #sleep 3
     source venv/bin/activate
-    sleep 1
+    #sleep 1
     pip install -r requirements.txt
 fi
