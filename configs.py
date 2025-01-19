@@ -6,7 +6,7 @@
 # Date: 2019-06-01
 # Version: 0.1
 
-from sh import grep, sed, contrib, mv, which
+from sh import grep, sed, contrib, mv, which, command
 
 # DNF5 CONSTANTS
 MAX_PARALLEL_DOWNLOADS_FILE = '/etc/dnf/dnf.conf'
@@ -82,13 +82,11 @@ def grub_before_nvidia(screen_res):
         with contrib.sudo:
             print("Enter sudo password to configure grub configuration")
             mv('grub', '/etc/default/grub')
-            which('grub2-mkconfig -o /etc/grub2-efi.cfg')
-            print("SUCCESS: GRUB configuration completed")
 
-            """try:
-                which('grub2-mkconfig -o /etc/grub2-efi.cfg')
+            try:
+                command('grub2-mkconfig -o /etc/grub2-efi.cfg')
                 print("SUCCESS: GRUB configuration completed")
             except EnvironmentError as error:
-                print(f"ERROR: GRUB configuration failed: {error}")"""
+                print(f"ERROR: GRUB configuration failed: {error}")
     except EnvironmentError as error:
         print(f"ERROR: GRUB configuration failed: {error}")
