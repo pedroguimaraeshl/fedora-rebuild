@@ -82,11 +82,13 @@ def grub_before_nvidia(screen_res):
         with contrib.sudo:
             print("Enter sudo password to configure grub configuration")
             mv('grub', '/etc/default/grub')
+            which('grub2-mkconfig -o /etc/grub2-efi.cfg')
+            print("SUCCESS: GRUB configuration completed")
 
-            try:
+            """try:
                 which('grub2-mkconfig -o /etc/grub2-efi.cfg')
                 print("SUCCESS: GRUB configuration completed")
             except EnvironmentError as error:
-                print(f"ERROR: GRUB configuration failed: {error}")
+                print(f"ERROR: GRUB configuration failed: {error}")"""
     except:
         print("ERROR: GRUB configuration failed")
