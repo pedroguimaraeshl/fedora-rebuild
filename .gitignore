@@ -1,0 +1,52 @@
+# grub files
+grub
+grub_bkp
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribuição / pacotes
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Arquivo de log
+*.log
+
+# Arquivos de configuração do editor
+.idea/
+.vscode/
+*.sublime-project/
+*.sublime-workspace/
+
+# Virtualenv
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env/
+
+# Arquivos do Jupyter Notebook
+.ipynb_checkpoints
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+*.swp
