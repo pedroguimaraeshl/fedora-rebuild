@@ -22,7 +22,10 @@
 # fedora config text
 
 # Importing modules
+from sh import run
 import configs as cfg
+
+run("run_first.sh")
 
 #cfg.dnf5()
 cfg.grub_before_nvidia("fullhd")
