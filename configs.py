@@ -8,25 +8,14 @@
 
 from sh import grep, sed, contrib, mv, which, command
 
-# DNF5 CONSTANTS
-MAX_PARALLEL_DOWNLOADS_FILE = '/etc/dnf/dnf.conf'
-MAX_PARALLEL_DOWNLOADS_MIN = 3
-MAX_PARALLEL_DOWNLOADS_MAX = 21
 
-# GRUB CONSTANTS
-GRUB_FILE = '/etc/default/grub'
-GRUB_CFG = ('GRUB_TIMEOUT=30', \
-            'GRUB_DISTRIBUTOR="$(sed ' + "'s, release .*$,,g' /etc/system-release)" + '"', \
-            'GRUB_DEFAULT=saved', \
-            'GRUB_DISABLE_SUBMENU=true', \
-            'GRUB_TERMINAL_OUTPUT="gfxterm"', \
-            None, \
-            'GRUB_DISABLE_RECOVERY="true"', \
-            'GRUB_ENABLE_BLSCFG=true', \
-            'GRUB_GFXPAYLOAD="keep"', \
-            'GRUBGFXMODE=1920x1080x32,auto')
-
+# Function to configure DNF5 max_parallel_downloads
 def dnf5():
+    # DNF5 CONSTANTS
+    MAX_PARALLEL_DOWNLOADS_FILE = '/etc/dnf/dnf.conf'
+    MAX_PARALLEL_DOWNLOADS_MIN = 3
+    MAX_PARALLEL_DOWNLOADS_MAX = 21
+
     print(">> DNF5 CONFIG <<")
     print("> Configuring max_parallel_downloads...")
     
@@ -49,7 +38,22 @@ def dnf5():
             print("ERROR: max_parallel_downloads configuration failed")
             return
 
+
+# Function to configure GRUB before NVIDIA installation
 def grub_before_nvidia(screen_res):
+    # GRUB CONSTANTS
+    GRUB_FILE = '/etc/default/grub'
+    GRUB_CFG = ('GRUB_TIMEOUT=30', \
+                'GRUB_DISTRIBUTOR="$(sed ' + "'s, release .*$,,g' /etc/system-release)" + '"', \
+                'GRUB_DEFAULT=saved', \
+                'GRUB_DISABLE_SUBMENU=true', \
+                'GRUB_TERMINAL_OUTPUT="gfxterm"', \
+                None, \
+                'GRUB_DISABLE_RECOVERY="true"', \
+                'GRUB_ENABLE_BLSCFG=true', \
+                'GRUB_GFXPAYLOAD="keep"', \
+                'GRUBGFXMODE=1920x1080x32,auto')
+
     print(">> GRUB CONFIG <<\n")
     print("Configuring GRUB before NVIDIA installation...")
 
