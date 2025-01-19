@@ -17,7 +17,7 @@ def dnf5():
     MAX_PARALLEL_DOWNLOADS_MAX = 21
 
     print(">> DNF5 CONFIG <<")
-    print("> Configuring max_parallel_downloads...")
+    print("Configuring max_parallel_downloads...")
     
     try:
         grep('max_parallel_downloads', MAX_PARALLEL_DOWNLOADS_FILE)
@@ -94,3 +94,36 @@ def grub_before_nvidia(screen_res):
                 print(f"ERROR: GRUB configuration failed: {error}")
     except EnvironmentError as error:
         print(f"ERROR: GRUB configuration failed: {error}")
+        return
+
+
+def change_dns():
+    # DNS CONSTANTS
+    GOOGLE_SERVERS = '8.8.8.8,8.8.4.4'
+
+    print(">> DNS CONFIG <<\n")
+
+    try:
+        print("Avaliable connections:")
+        command('nmcli', 'device', 'status', _fg=True)
+
+        custom_dns = input("Do you want to configure custom DNS servers? (Enter for Google DNS): ")
+        conn_name = input("Connection name: ")
+
+        if conn_name == '':
+            print("ERROR: Connection name is required")
+            return
+
+        print("Configuring DNS servers...")
+        print("Enter sudo password to configure DNS servers")
+
+        with contrib.sudo:
+            if custom_dns == '':
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', GOOGLE_SERVERS)
+            else:
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', custom_dns)
+                
+        print("SUCCESS: DNS configuration completed")
+    except EnvironmentError as error:
+        print(f"ERROR: DNS configuration failed: {error}")
+        return
