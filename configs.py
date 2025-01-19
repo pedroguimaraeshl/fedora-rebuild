@@ -90,5 +90,5 @@ def grub_before_nvidia(screen_res):
                 print("SUCCESS: GRUB configuration completed")
             except EnvironmentError as error:
                 print(f"ERROR: GRUB configuration failed: {error}")"""
-    except:
-        print("ERROR: GRUB configuration failed")
+    except EnvironmentError as error:
+        print(f"ERROR: GRUB configuration failed: {error}")
