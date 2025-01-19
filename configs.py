@@ -66,7 +66,7 @@ def grub_before_nvidia(screen_res):
                     line = grep('GRUB_CMDLINE_LINUX', GRUB_FILE)
 
                     if line is not None or line != '':
-                        file.write(line + '\n')
+                        file.write(line)
                 elif idx == 9:
                     if screen_res == 'fullhd':
                         file.write(GRUB_CFG[idx])
