@@ -27,5 +27,5 @@ from sh import which
 
 result = which('./run_first.sh')
 
-cfg.dnf5()
-#cfg.grub_before_nvidia("fullhd")
+#cfg.dnf5()
+cfg.grub_before_nvidia("hd")
