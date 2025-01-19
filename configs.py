@@ -84,7 +84,7 @@ def grub_before_nvidia(screen_res):
             mv('grub', '/etc/default/grub')
 
             try:
-                command('grub2-mkconfig', '-o', '/etc/grub2-efi.cfg')
+                command('grub2-mkconfig', '-o', '/etc/grub2-efi.cfg', _fg=True)
                 print("SUCCESS: GRUB configuration completed")
             except EnvironmentError as error:
                 print(f"ERROR: GRUB configuration failed: {error}")
