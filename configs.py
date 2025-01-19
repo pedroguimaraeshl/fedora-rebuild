@@ -19,7 +19,7 @@ GRUB_CFG = ('GRUB_TIMEOUT=30', \
             'GRUB_DISTRIBUTOR="$(sed ' + "'s, release .*$,,g' /etc/system-release)" + '"', \
             'GRUB_DEFAULT=saved', \
             'GRUB_DISABLE_SUBMENU=true', \
-            '#GRUB_TERMINAL_OUTPUT="gfxterm"', \
+            'GRUB_TERMINAL_OUTPUT="gfxterm"', \
             None, \
             'GRUB_DISABLE_RECOVERY="true"', \
             'GRUB_ENABLE_BLSCFG=true', \
