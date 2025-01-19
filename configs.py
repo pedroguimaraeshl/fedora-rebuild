@@ -30,8 +30,9 @@ def dnf5():
                 break
 
         try:
+            print("Enter sudo password to configure max_parallel_downloads")
+
             with contrib.sudo:
-                print("Enter sudo password to configure max_parallel_downloads")
                 sed('-i', '/main/ a\max_parallel_downloads = ' + value + '    # added by fedora-rebuild at pedroguimaraeshl on github', MAX_PARALLEL_DOWNLOADS_FILE)
                 print("SUCCESS: max_parallel_downloads configuration completed")
         except:
@@ -83,8 +84,9 @@ def grub_before_nvidia(screen_res):
         return
 
     try:
+        print("Enter sudo password to configure grub configuration")
+        
         with contrib.sudo:
-            print("Enter sudo password to configure grub configuration")
             mv('grub', '/etc/default/grub')
 
             try:
