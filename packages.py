@@ -77,16 +77,16 @@ def vscode():
 
         with contrib.sudo:
             print("Importing Microsoft GPG key...")
-            command('rpm', '--import', 'https://packages.microsoft.com/keys/microsoft.asc')
+            command('rpm', '--import', 'https://packages.microsoft.com/keys/microsoft.asc', _fg=True)
 
             print("Adding VSCode repository...")
             cp('files/vscode.repo', '/etc/yum.repos.d/vscode.repo')
             
             print("Updating DNF packages...")
-            command('dnf', 'check-update', '-y')
+            command('dnf', 'check-update', '-y', _fg=True)
 
             print("Installing VSCode...")
-            command('dnf', 'install', 'code', '-y')
+            command('dnf', 'install', 'code', '-y', _fg=True)
     except Exception as error:
         print(f"ERROR: Can not configure or install VSCode package: {error}")
         return
