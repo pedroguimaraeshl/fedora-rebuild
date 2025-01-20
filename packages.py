@@ -103,13 +103,17 @@ def oh_my_zsh():
             print("Installing zsh...")
             command('dnf', 'install', 'zsh', '-y')
 
-            print("Installing oh-my-zsh...")
-            command('sh', '-c', CURL_COMMAND)
+        print("Installing oh-my-zsh for current user...")
+        command('sh', '-c', CURL_COMMAND)
 
-            print("/root and /home/pedro .zshrc configuration...")
-            cp('configs/root.zshrc', '/root/.zshrc')
-
+        print("Copying .zshrc to user folder...")
         cp('configs/piotrek.zshrc', '/home/pedro/.zshrc')
+
+        with contrib.sudo:
+            print("Copying .zshrc to root folder...")
+            cp('configs/root.zshrc', '/root/.zshrc')
+        
+        
     except Exception as error:
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
         return
