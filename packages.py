@@ -80,7 +80,7 @@ def vscode():
             command('rpm', '--import', 'https://packages.microsoft.com/keys/microsoft.asc')
 
             print("Adding VSCode repository...")
-            cp('configs/vscode.repo', '/etc/yum.repos.d/vscode.repo')
+            cp('files/vscode.repo', '/etc/yum.repos.d/vscode.repo')
             
             print("Updating DNF packages...")
             command('dnf', 'check-update', '-y')
