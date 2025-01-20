@@ -7,8 +7,7 @@
 # Version: 0.1
 
 
-from sh import grep, contrib, command, cp, curl
-
+from sh import contrib, command, cp
 
 # Function to install ASUS ROG Gui and Asusctl packages
 def asus():
@@ -77,10 +76,16 @@ def vscode():
         print("Enter sudo password to install VSCode")
 
         with contrib.sudo:
+            print("Importing Microsoft GPG key...")
             command('rpm', '--import', 'https://packages.microsoft.com/keys/microsoft.asc')
-            command('echo', '-e', VSCODE_REPO, '> ', '/etc/yum.repos.d/vscode.repo')
-            #grep(command('echo', '-e', VSCODE_REPO), 'tee', '/etc/yum.repos.d/vscode.repo', '>', '/dev/null')
+
+            print("Adding VSCode repository...")
+            cp('configs/vscode.repo', '/etc/yum.repos.d/vscode.repo')
+            
+            print("Updating DNF packages...")
             command('dnf', 'check-update', '-y')
+
+            print("Installing VSCode...")
             command('dnf', 'install', 'code', '-y')
     except Exception as error:
         print(f"ERROR: Can not configure or install VSCode package: {error}")
