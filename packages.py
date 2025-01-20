@@ -88,6 +88,7 @@ def vscode():
     return
 
 
+'''
 # Function to install oh-my-zsh
 def oh_my_zsh():
     # OH-MY-ZSH CONSTANTS
@@ -118,3 +119,4 @@ def oh_my_zsh():
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
         return
     return
+'''
