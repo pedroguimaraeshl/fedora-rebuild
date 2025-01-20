@@ -7,7 +7,7 @@
 # Version: 0.1
 
 
-from sh import grep, sed, contrib, mv, command, cp
+from sh import grep, contrib, command, cp, curl
 
 
 # Function to install ASUS ROG Gui and Asusctl packages
@@ -104,7 +104,7 @@ def oh_my_zsh():
             command('dnf', 'install', 'zsh', '-y')
 
         print("Installing oh-my-zsh for current user...")
-        command('sh', '-c', CURL_COMMAND)
+        command('sh', '-c', '"$(' + curl('https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh', '-fsSL') + ')"')
 
         print("Copying .zshrc to user folder...")
         cp('configs/piotrek.zshrc', '/home/pedro/.zshrc')
