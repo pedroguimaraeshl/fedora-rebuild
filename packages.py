@@ -96,9 +96,6 @@ def oh_my_zsh():
     print(">> OH-MY-ZSH  CONFIG <<")
     print("Installing oh-my-zsh...")
 
-    print(CURL_COMMAND)
-    exit()
-
     try:
         print("Enter sudo password to install oh-my-zsh")
 
@@ -107,7 +104,7 @@ def oh_my_zsh():
             command('dnf', 'install', 'zsh', '-y')
 
             print("Installing oh-my-zsh...")
-            command('sh', '-c', '"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"')
+            command('sh', '-c', CURL_COMMAND)
 
             print("/root and /home/pedro .zshrc configuration...")
             cp('configs/root.zshrc', '/root/.zshrc')
