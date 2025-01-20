@@ -78,8 +78,8 @@ def vscode():
 
         with contrib.sudo:
             command('rpm', '--import', 'https://packages.microsoft.com/keys/microsoft.asc')
-            #command('echo', '-e', VSCODE_REPO, '> ', '/etc/yum.repos.d/vscode.repo')
-            grep(command('echo', '-e', VSCODE_REPO), 'tee', '/etc/yum.repos.d/vscode.repo', '>', '/dev/null')
+            command('echo', '-e', VSCODE_REPO, '> ', '/etc/yum.repos.d/vscode.repo')
+            #grep(command('echo', '-e', VSCODE_REPO), 'tee', '/etc/yum.repos.d/vscode.repo', '>', '/dev/null')
             command('dnf', 'check-update', '-y')
             command('dnf', 'install', 'code', '-y')
     except Exception as error:
