@@ -17,11 +17,15 @@
 # fedora config text
 
 # Importing modules
-import configs as cfg
+import configs as configs
+import packages as packages
 from sh import command
 
 result = command('./run_first.sh')
 
-#cfg.dnf5()
-#cfg.grub_before_nvidia("fullhd")
-cfg.change_dns()
+#configs.dnf5()
+#configs.grub_before_nvidia("fullhd")
+#configs.change_dns()
+packages.asus()
+packages.better_fonts()
+packages.oh_my_zsh()
