@@ -19,12 +19,23 @@ def asus():
         print("Enter sudo password to install ASUS packages")
 
         with contrib.sudo:
-            command('dnf', 'copr', 'enable', 'lukenukem/asus-linux', '-y')
-            command('dnf', 'update', '-y')
-            command('dnf', 'install', 'asusctl', 'supergfxctl', '-y')
-            command('dnf', 'update', '--refresh', '-y')
-            command('systemctl', 'enable', 'supergfxd.service')
-            command('dnf', 'install', 'asusctl-rog-gui', '-y')
+            print("Enabling ASUS repository...")
+            command('dnf', 'copr', 'enable', 'lukenukem/asus-linux', '-y', _fg=True)
+
+            print("Updating DNF packages...")
+            command('dnf', 'update', '-y', _fg=True)
+
+            print("Installing ASUS packages...")
+            command('dnf', 'install', 'asusctl', 'supergfxctl', '-y', _fg=True)
+
+            print("Refreshing DNF packages...")
+            command('dnf', 'update', '--refresh', '-y', _fg=True)
+
+            print("Enabling supergfxd service...")
+            command('systemctl', 'enable', 'supergfxd.service', _fg=True)
+
+            print("Installing ASUS ROG Gui...")
+            command('dnf', 'install', 'asusctl-rog-gui', '-y', _fg=True)
     except Exception as error:
         print(f"ERROR: Can not configure or install ASUS packages: {error}")
         return
@@ -40,9 +51,14 @@ def better_fonts():
         print("Enter sudo password to install better-fonts packages")
 
         with contrib.sudo:
-            command('dnf', 'copr', 'enable', 'chriscowleyunix/better_fonts', '-y')
-            command('dnf', 'install', 'fontconfig-font-replacements', '-y')
-            #command('dnf', 'install', 'fontconfig-enhanced-defaults', '-y')
+            print("Enabling better-fonts repository...")
+            command('dnf', 'copr', 'enable', 'chriscowleyunix/better_fonts', '-y', _fg=True)
+
+            print("Installing better-fonts packages...")
+            command('dnf', 'install', 'fontconfig-font-replacements', '-y', _fg=True)
+
+            #print("Installing fontconfig-enhanced-defaults...")
+            #command('dnf', 'install', 'fontconfig-enhanced-defaults', '-y', _fg=True)
     except Exception as error:
         print(f"ERROR: Can not configure or install better-fonts packages: {error}")
         return
@@ -74,8 +90,14 @@ def vscode():
 
 # Function to install oh-my-zsh
 def oh_my_zsh():
+    # OH-MY-ZSH CONSTANTS
+    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+
     print(">> OH-MY-ZSH  CONFIG <<")
     print("Installing oh-my-zsh...")
+
+    print(CURL_COMMAND)
+    exit()
 
     try:
         print("Enter sudo password to install oh-my-zsh")
@@ -83,8 +105,10 @@ def oh_my_zsh():
         with contrib.sudo:
             print("Installing zsh...")
             command('dnf', 'install', 'zsh', '-y')
+
             print("Installing oh-my-zsh...")
             command('sh', '-c', '"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"')
+
             print("/root and /home/pedro .zshrc configuration...")
             cp('configs/root.zshrc', '/root/.zshrc')
 
