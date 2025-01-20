@@ -8,9 +8,12 @@ if [ -d venv ] || [ -d .venv ]; then
     source venv/bin/activate
     echo "Sucess"
 else
+    echo "Creating virtual environment"
     python -m venv venv
-    #sleep 3
+
+    echo "Activating virtual environment"
     source venv/bin/activate
-    #sleep 1
+
+    echo "Installing requirements"
     pip install -r requirements.txt
 fi

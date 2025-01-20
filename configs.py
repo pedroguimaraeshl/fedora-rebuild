@@ -1,4 +1,4 @@
-# Fedora Rebuild - Config.py
+# Fedora Rebuild - config.py
 #
 # Functions to custom configs in Fedora
 #
@@ -6,7 +6,8 @@
 # Date: 2019-06-01
 # Version: 0.1
 
-from sh import grep, sed, contrib, mv, which, command
+
+from sh import grep, sed, contrib, mv, command
 
 
 # Function to configure DNF5 max_parallel_downloads
@@ -38,6 +39,7 @@ def dnf5():
         except:
             print("ERROR: max_parallel_downloads configuration failed")
             return
+        return
 
 
 # Function to configure GRUB before NVIDIA installation
@@ -85,7 +87,7 @@ def grub_before_nvidia(screen_res):
 
     try:
         print("Enter sudo password to configure grub configuration")
-        
+
         with contrib.sudo:
             mv('grub', '/etc/default/grub')
 
@@ -99,9 +101,11 @@ def grub_before_nvidia(screen_res):
         return
 
 
+# Function to change DNS servers
 def change_dns():
     # DNS CONSTANTS
-    GOOGLE_SERVERS = '8.8.8.8,8.8.4.4'
+    GOOGLE_IPV4_SERVERS = '8.8.8.8,8.8.4.4'
+    GOOGLE_IPV6_SERVERS = '2001:4860:4860::8888,2001:4860:4860::8844'
 
     print(">> DNS CONFIG <<\n")
 
@@ -109,8 +113,9 @@ def change_dns():
         print("Avaliable connections:")
         command('nmcli', 'device', 'status', _fg=True)
 
-        custom_dns = input("Do you want to configure custom DNS servers? (Enter for Google DNS): ")
-        conn_name = input("Connection name: ")
+        custom_ipv4_dns = input("\nDo you want to configure custom IPV4 DNS servers? (Enter for Google DNS): ")
+        custom_ipv6_dns = input("Do you want to configure custom IPV6 DNS servers? (Enter for Google DNS): ")
+        conn_name = input("\nConnection name: ")
 
         if conn_name == '':
             print("ERROR: Connection name is required")
@@ -120,10 +125,15 @@ def change_dns():
         print("Enter sudo password to configure DNS servers")
 
         with contrib.sudo:
-            if custom_dns == '':
-                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', GOOGLE_SERVERS)
+            if custom_ipv4_dns == '':
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', GOOGLE_IPV4_SERVERS)
             else:
-                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', custom_dns)
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv4.dns', custom_ipv4_dns)
+
+            if custom_ipv6_dns == '':
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv6.dns', GOOGLE_IPV6_SERVERS)
+            else:
+                command('nmcli', 'connection', 'modify', conn_name, 'ipv6.dns', custom_ipv6_dns)
                 
         print("SUCCESS: DNS configuration completed")
     except EnvironmentError as error:

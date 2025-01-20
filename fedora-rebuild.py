@@ -6,13 +6,8 @@
 # Date: 2019-06-01
 # Version: 0.1
 
-# change DNS
-
-# ASUS
-# Better fonts
 # NVIDIA
-# VSCode
-# oh-my-zsh
+
 # packages
 # flatpak
 
@@ -23,9 +18,9 @@
 
 # Importing modules
 import configs as cfg
-from sh import which
+from sh import command
 
-result = which('./run_first.sh')
+result = command('./run_first.sh')
 
 #cfg.dnf5()
 #cfg.grub_before_nvidia("fullhd")
