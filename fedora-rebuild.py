@@ -8,7 +8,6 @@
 
 # NVIDIA
 
-# packages
 # flatpak
 
 # extensions
@@ -28,5 +27,9 @@ result = command('./run_first.sh')
 #configs.change_dns()
 #packages.asus()
 #packages.better_fonts()
-packages.vscode()
+#packages.vscode()
+
 ##packages.oh_my_zsh()
+
+#packages.install_packages()
+packages.install_flatpaks()

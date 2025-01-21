@@ -125,3 +125,129 @@ def oh_my_zsh():
         return
     return
 '''
+
+
+# Function to install packages in system
+def install_packages():
+    custom_pkgs = []
+    pkg_list = ['android-tools','extremetuxracer','fastfetch','flatseal','google-chrome-stable','gnome-tweaks','pycharm-community','python3-pip', \
+                'p7zip','p7zip-plugins','supertux','supertuxkart','transmission','unrar','unzip','vlc','vlc-bittorrent','vlc-extras','wormux',]
+    
+    print(">> PACKAGES CONFIG <<")
+    print("List of default packages to install...")
+
+    for idx in range(len(pkg_list)):
+        print(f"{idx + 1}: {pkg_list[idx]}")
+
+    add_pkg = input("Do you want to add any custom package? (y/N): ")
+
+    if add_pkg.lower() == 'y':
+        while True:
+            pkg_name = input("\nEnter the name of the package or leave empty to exit: ")
+
+            if pkg_name.lower() == '':
+                break
+            else:
+                print("Checking if package exists in repository:")
+                search_result = command('dnf', 'search', pkg_name)
+
+                if search_result == "No matches found.\n":
+                    print("ERROR: Package not found in repository...")
+                else:
+                    print("Checking if package is already in the list...")
+                    try:
+                        if pkg_list.count(pkg_name):
+                            print("Package already in list...")
+                        else:
+                            custom_pkgs.append(pkg_name)
+                            print("Package added to list...")
+                    except Exception as error:
+                        print(f"ERROR: Can not find package {custom_pkgs} in repository: {error}")
+                        continue
+        
+        if len(custom_pkgs) > 0:
+            print("List of custom packages to install...")
+        
+            for idx in range(len(custom_pkgs)):
+                print(f"{idx + 1}: {custom_pkgs[idx]}")
+
+            add_pkgs = input("\nDo you want to add these packages to install? (Y/n): ")
+
+            if add_pkgs.lower() == 'n':
+                print("WARNING: Custom packages will not be installed...")
+            else:
+                pkg_list.extend(custom_pkgs)
+                pkg_list.sort()
+        
+    print("Installing packages...")
+    with contrib.sudo:
+        try:
+            command('dnf', 'install', pkg_list, '-y', _fg=True)
+            print("SUCCESS: Packages installed successfully...")
+        except Exception as error:
+            print(f"ERROR: Can not install packages: {error}")
+    
+    return
+
+
+def install_flatpaks():
+    custom_flatpaks = []
+    flatpak_list = ['com.adobe.Reader','com.bitwarden.desktop','com.discordapp.Discord','com.jetbrains.IntelliJ-IDEA-Community', \
+                    'com.mattjakeman.ExtensionManager','com.opera.Opera','com.spotify.Client','io.dbeaver.DBeaverCommunity', \
+                    'org.ferdium.Ferdium','us.zoom.Zoom']
+    
+    print(">> FLATPAK CONFIG <<")
+    print("List of default packages to install by Application ID:")
+
+    for idx in range(len(flatpak_list)):
+        print(f"{idx + 1}: {flatpak_list[idx]}")
+
+    add_flatpak = input("Do you want to add any custom flatpak package? (y/N): ")
+
+    if add_flatpak.lower() == 'y':
+        while True:
+            flatpak_name = input("\nEnter the application ID of the flatpak package or leave empty to exit: ")
+
+            if flatpak_name.lower() == '':
+                break
+            else:
+                print("Checking if package exists in flatpak repository:")
+                search_result = command('flatpak', 'search', flatpak_name)
+
+                if search_result == "No matches found.\n" or search_result == "Nenhuma correspondência localizada\n":
+                    print("ERROR: Package not found in repository...")
+                else:
+                    print("Checking if package is already in the list...")
+                    try:
+                        if flatpak_list.count(flatpak_name):
+                            print("Package already in list...")
+                        else:
+                            custom_flatpaks.append(flatpak_name)
+                            print("Package added to list...")
+                    except Exception as error:
+                        print(f"ERROR: Can not find package {flatpak_name} in repository: {error}")
+                        continue
+        
+        if len(custom_flatpaks) > 0:
+            print("List of custom packages to install...")
+        
+            for idx in range(len(custom_flatpaks)):
+                print(f"{idx + 1}: {custom_flatpaks[idx]}")
+
+            add_pkgs = input("\nDo you want to add these packages to install? (Y/n): ")
+
+            if add_pkgs.lower() == 'n':
+                print("WARNING: Custom packages will not be installed...")
+            else:
+                flatpak_list.extend(custom_flatpaks)
+                flatpak_list.sort()
+        
+    print("Installing packages...")
+    with contrib.sudo:
+        try:
+            command('dnf', 'install', pkg_list, '-y', _fg=True)
+            print("SUCCESS: Packages installed successfully...")
+        except Exception as error:
+            print(f"ERROR: Can not install packages: {error}")
+    
+    return
