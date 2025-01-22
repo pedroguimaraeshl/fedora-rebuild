@@ -16,13 +16,17 @@
 # fedora config text
 
 # Importing modules
-import configs as configs
-import packages as packages
+
 #from sh import command
 import subprocess
 
 #result = command('./run_first.sh')
 subprocess.run(['./run_first.sh'])
+
+
+import configs as configs
+import packages as packages
+
 
 configs.dnf5()
 configs.grub_before_nvidia("fullhd")
