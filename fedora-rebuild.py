@@ -18,9 +18,11 @@
 # Importing modules
 import configs as configs
 import packages as packages
-from sh import command
+#from sh import command
+import subprocess
 
-result = command('./run_first.sh')
+#result = command('./run_first.sh')
+subprocess.run(['./run_first.sh'])
 
 configs.dnf5()
 configs.grub_before_nvidia("fullhd")
