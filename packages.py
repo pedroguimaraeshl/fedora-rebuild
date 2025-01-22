@@ -127,17 +127,55 @@ def oh_my_zsh():
 '''
 
 
+#
+def remove_items(list, items):
+    # Changing indexes to package name
+    for idx, pkg in enumerate(items):
+        if 0 < int(pkg) > len(list):
+            print(f"ERROR: Package index {pkg} is invalid. Ignoring packages removal...")
+            return False
+        else:
+            items[idx] = list[int(pkg) - 1]
+    
+    return items
+
+
 # Function to install packages in system
 def install_packages():
     custom_pkgs = []
-    pkg_list = ['android-tools','extremetuxracer','fastfetch','flatseal','google-chrome-stable','gnome-tweaks','pycharm-community','python3-pip', \
-                'p7zip','p7zip-plugins','supertux','supertuxkart','transmission','unrar','unzip','vlc','vlc-bittorrent','vlc-extras','wormux',]
+    items_list = ['extremetuxracer','fastfetch','flatseal','google-chrome-stable','gnome-tweaks','pycharm-community','python3-pip','p7zip','p7zip-plugins', \
+                'supertux','supertuxkart','unrar','unzip','vlc','vlc-bittorrent','vlc-extras','wormux',]
     
     print(">> PACKAGES CONFIG <<")
     print("List of default packages to install...")
+    for idx in range(len(items_list)):
+        print(f"{idx + 1}: {items_list[idx]}")
+    
+    remove_pkg = input("Do you want to remove any default package? (y/N): ")
 
-    for idx in range(len(pkg_list)):
-        print(f"{idx + 1}: {pkg_list[idx]}")
+    if remove_pkg.lower() == 'y':
+        pkgs_to_remove = input("Enter the numbers of the packages to remove separated by comma (or leave empty to exit:): ")
+
+        if pkgs_to_remove != '':
+            if ',' in pkgs_to_remove:
+                pkgs_to_remove = pkgs_to_remove.split(',')
+            
+            pkgs_to_remove = remove_items(items_list, pkgs_to_remove)         
+            
+            print("List of packages to remove...")
+            for pkg in pkgs_to_remove:
+                print(f" - {pkg}")
+            
+            confirm = input("Are you sure you want to remove these packages? (y/N): ")
+            if confirm.lower() == 'y':
+                for pkg in pkgs_to_remove:
+                    items_list.remove(pkg)
+
+                print("Packages removed...")
+
+                print("List of default packages to install...")
+                for idx in range(len(items_list)):
+                    print(f"{idx + 1}: {items_list[idx]}")
 
     add_pkg = input("Do you want to add any custom package? (y/N): ")
 
@@ -193,8 +231,8 @@ def install_packages():
 def install_flatpaks():
     custom_flatpaks = []
     flatpak_list = ['com.adobe.Reader','com.bitwarden.desktop','com.discordapp.Discord','com.jetbrains.IntelliJ-IDEA-Community', \
-                    'com.mattjakeman.ExtensionManager','com.opera.Opera','com.spotify.Client','io.dbeaver.DBeaverCommunity', \
-                    'org.ferdium.Ferdium','us.zoom.Zoom']
+                    'com.mattjakeman.ExtensionManager','com.opera.Opera','com.spotify.Client','de.haeckerfelix.Fragments', \
+                    'io.dbeaver.DBeaverCommunity','org.ferdium.Ferdium','us.zoom.Zoom']
     
     print(">> FLATPAK CONFIG <<")
     print("List of default packages to install by Application ID:")

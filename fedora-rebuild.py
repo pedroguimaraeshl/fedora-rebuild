@@ -22,14 +22,14 @@ from sh import command
 
 result = command('./run_first.sh')
 
-#configs.dnf5()
-#configs.grub_before_nvidia("fullhd")
-#configs.change_dns()
-#packages.asus()
-#packages.better_fonts()
-#packages.vscode()
+configs.dnf5()
+configs.grub_before_nvidia("fullhd")
+configs.change_dns()
+packages.asus()
+packages.better_fonts()
+packages.vscode()
 
 ##packages.oh_my_zsh()
 
 #packages.install_packages()
-packages.install_flatpaks()
+#packages.install_flatpaks()
