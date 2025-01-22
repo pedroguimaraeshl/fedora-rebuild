@@ -21,7 +21,7 @@
 import subprocess
 
 #result = command('./run_first.sh')
-subprocess.run(['./run_first.sh'])
+subprocess.run('sh','./run_first.sh')
 
 
 import configs as configs
