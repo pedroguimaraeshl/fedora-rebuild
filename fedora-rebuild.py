@@ -18,10 +18,12 @@
 # Importing modules
 
 #from sh import command
-import subprocess
+#import subprocess
+from os import system
 
+system('sh ./run_first.sh')
 #result = command('./run_first.sh')
-subprocess.run('sh','./run_first.sh')
+#subprocess.run('sh','./run_first.sh')
 
 
 import configs as configs
