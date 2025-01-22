@@ -3,7 +3,7 @@
 # Functions to custom configs in Fedora
 #
 # Author: Pedro Guimarães
-# Date: 2019-06-01
+# Date: 2025-01-22
 # Version: 0.1
 
 

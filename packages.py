@@ -3,11 +3,12 @@
 # Functions to install some packages in Fedora
 #
 # Author: Pedro Guimarães
-# Date: 2019-06-01
+# Date: 2025-01-22
 # Version: 0.1
 
 
 from sh import contrib, command, cp
+
 
 # Function to install ASUS ROG Gui and Asusctl packages
 def asus():
@@ -35,6 +36,8 @@ def asus():
 
             print("Installing ASUS ROG Gui...")
             command('dnf', 'install', 'asusctl-rog-gui', '-y', _fg=True)
+
+            print("SUCCESS: ASUS packages successfully installed...")
     except Exception as error:
         print(f"ERROR: Can not configure or install ASUS packages: {error}")
         return
@@ -58,6 +61,8 @@ def better_fonts():
 
             #print("Installing fontconfig-enhanced-defaults...")
             #command('dnf', 'install', 'fontconfig-enhanced-defaults', '-y', _fg=True)
+
+            print("SUCCESS: Better fonts successfully installed...")
     except Exception as error:
         print(f"ERROR: Can not configure or install better-fonts packages: {error}")
         return
@@ -87,6 +92,8 @@ def vscode():
 
             print("Installing VSCode...")
             command('dnf', 'install', 'code', '-y', _fg=True)
+
+            print("SUCCESS: VSCode successfully installed...")
     except Exception as error:
         print(f"ERROR: Can not configure or install VSCode package: {error}")
         return
@@ -127,11 +134,14 @@ def oh_my_zsh():
 '''
 
 
-#
+# Functino to remove items. Used by packages e flatpak function
 def remove_items(list, items):
     # Changing indexes to package name
     for idx, pkg in enumerate(items):
-        if 0 < int(pkg) > len(list):
+        value = int(pkg)
+        limit = len(list)
+
+        if value <= 0 or value > limit:
             print(f"ERROR: Package index {pkg} is invalid. Ignoring packages removal...")
             return False
         else:
@@ -157,25 +167,24 @@ def install_packages():
         pkgs_to_remove = input("Enter the numbers of the packages to remove separated by comma (or leave empty to exit:): ")
 
         if pkgs_to_remove != '':
-            if ',' in pkgs_to_remove:
-                pkgs_to_remove = pkgs_to_remove.split(',')
-            
-            pkgs_to_remove = remove_items(items_list, pkgs_to_remove)         
-            
-            print("List of packages to remove...")
-            for pkg in pkgs_to_remove:
-                print(f" - {pkg}")
-            
-            confirm = input("Are you sure you want to remove these packages? (y/N): ")
-            if confirm.lower() == 'y':
+            pkgs_to_remove = pkgs_to_remove.split(',')            
+            pkgs_to_remove = remove_items(items_list, pkgs_to_remove)
+
+            if pkgs_to_remove is not False:
+                print("List of packages to remove...")
                 for pkg in pkgs_to_remove:
-                    items_list.remove(pkg)
+                    print(f" - {pkg}")
+                
+                confirm = input("Are you sure you want to remove these packages? (y/N): ")
+                if confirm.lower() == 'y':
+                    for pkg in pkgs_to_remove:
+                        items_list.remove(pkg)
 
-                print("Packages removed...")
+                    print("Packages removed...")
 
-                print("List of default packages to install...")
-                for idx in range(len(items_list)):
-                    print(f"{idx + 1}: {items_list[idx]}")
+                    print("List of default packages to install...")
+                    for idx in range(len(items_list)):
+                        print(f"{idx + 1}: {items_list[idx]}")
 
     add_pkg = input("Do you want to add any custom package? (y/N): ")
 
@@ -194,7 +203,7 @@ def install_packages():
                 else:
                     print("Checking if package is already in the list...")
                     try:
-                        if pkg_list.count(pkg_name):
+                        if items_list.count(pkg_name):
                             print("Package already in list...")
                         else:
                             custom_pkgs.append(pkg_name)
@@ -214,13 +223,13 @@ def install_packages():
             if add_pkgs.lower() == 'n':
                 print("WARNING: Custom packages will not be installed...")
             else:
-                pkg_list.extend(custom_pkgs)
-                pkg_list.sort()
+                items_list.extend(custom_pkgs)
+                items_list.sort()
         
     print("Installing packages...")
     with contrib.sudo:
         try:
-            command('dnf', 'install', pkg_list, '-y', _fg=True)
+            command('dnf', 'install', items_list, '-y', _fg=True)
             print("SUCCESS: Packages installed successfully...")
         except Exception as error:
             print(f"ERROR: Can not install packages: {error}")
@@ -228,18 +237,43 @@ def install_packages():
     return
 
 
+# Function to install flatpaks
 def install_flatpaks():
     custom_flatpaks = []
     flatpak_list = ['com.adobe.Reader','com.bitwarden.desktop','com.discordapp.Discord','com.jetbrains.IntelliJ-IDEA-Community', \
-                    'com.mattjakeman.ExtensionManager','com.opera.Opera','com.spotify.Client','de.haeckerfelix.Fragments', \
-                    'io.dbeaver.DBeaverCommunity','org.ferdium.Ferdium','us.zoom.Zoom']
+                  'com.mattjakeman.ExtensionManager','com.opera.Opera','com.protonvpn.www','com.spotify.Client','de.haeckerfelix.Fragments', \
+                  'io.dbeaver.DBeaverCommunity','org.ferdium.Ferdium','org.nickvision.tubeconverter','us.zoom.Zoom']
     
     print(">> FLATPAK CONFIG <<")
     print("List of default packages to install by Application ID:")
-
     for idx in range(len(flatpak_list)):
         print(f"{idx + 1}: {flatpak_list[idx]}")
 
+    remove_flatpak = input("Do you want to remove any default flatpak package? (y/N): ")
+
+    if remove_flatpak.lower() == 'y':
+        flatpaks_to_remove = input("Enter the numbers of the flatpak packages to remove separated by comma (or leave empty to exit:): ")
+
+        if flatpaks_to_remove != '':
+            flatpaks_to_remove = flatpaks_to_remove.split(',')            
+            flatpaks_to_remove = remove_items(flatpak_list, flatpaks_to_remove)
+
+            if flatpaks_to_remove is not False:
+                print("List of packages to remove...")
+                for pkg in flatpaks_to_remove:
+                    print(f" - {pkg}")
+                
+                confirm = input("Are you sure you want to remove these flatpak packages? (y/N): ")
+                if confirm.lower() == 'y':
+                    for pkg in flatpaks_to_remove:
+                        flatpak_list.remove(pkg)
+
+                    print("Flatpak packages removed...")
+
+                    print("List of default flatpak packages to install...")
+                    for idx in range(len(flatpak_list)):
+                        print(f"{idx + 1}: {flatpak_list[idx]}")
+    
     add_flatpak = input("Do you want to add any custom flatpak package? (y/N): ")
 
     if add_flatpak.lower() == 'y':
@@ -272,20 +306,19 @@ def install_flatpaks():
             for idx in range(len(custom_flatpaks)):
                 print(f"{idx + 1}: {custom_flatpaks[idx]}")
 
-            add_pkgs = input("\nDo you want to add these packages to install? (Y/n): ")
+            add_pkgs = input("\nDo you want to add these flatpak packages to install? (Y/n): ")
 
             if add_pkgs.lower() == 'n':
-                print("WARNING: Custom packages will not be installed...")
+                print("WARNING: Custom flatpak packages will not be installed...")
             else:
                 flatpak_list.extend(custom_flatpaks)
                 flatpak_list.sort()
         
     print("Installing packages...")
-    with contrib.sudo:
-        try:
-            command('dnf', 'install', pkg_list, '-y', _fg=True)
-            print("SUCCESS: Packages installed successfully...")
-        except Exception as error:
-            print(f"ERROR: Can not install packages: {error}")
+    try:
+        command('flatpak', 'install', flatpak_list, '-y', _fg=True)
+        print("SUCCESS: Flatpak packages installed successfully...")
+    except Exception as error:
+        print(f"ERROR: Can not install flatpak packages: {error}")
     
     return
