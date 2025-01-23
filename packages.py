@@ -123,11 +123,11 @@ def oh_my_zsh():
         system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
 
         print("Copying .zshrc to user folder...")
-        cp('configs/piotrek.zshrc', '/home/pedro/.zshrc')
+        cp('files/piotrek.zshrc', '/home/pedro/.zshrc')
    
         with contrib.sudo:
             print("Copying .zshrc to root folder...")
-            cp('configs/root.zshrc', '/root/.zshrc')
+            cp('files/root.zshrc', '/root/.zshrc')
         
     except Exception as error:
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
