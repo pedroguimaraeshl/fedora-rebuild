@@ -100,11 +100,10 @@ def vscode():
     return
 
 
-'''
 # Function to install oh-my-zsh
 def oh_my_zsh():
     # OH-MY-ZSH CONSTANTS
-    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' + ' "" ' + '--unattended'
 
     print(">> OH-MY-ZSH  CONFIG <<")
     print("Installing oh-my-zsh...")
@@ -114,24 +113,22 @@ def oh_my_zsh():
 
         with contrib.sudo:
             print("Installing zsh...")
-            command('dnf', 'install', 'zsh', '-y')
-
+            command('dnf', 'install', 'zsh', '-y', _fg=True) 
+        
         print("Installing oh-my-zsh for current user...")
-        command('sh', '-c', '"$(' + curl('https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh', '-fsSL') + ')"')
+        command('sh', '-c', CURL_COMMAND + ')"')
 
         print("Copying .zshrc to user folder...")
         cp('configs/piotrek.zshrc', '/home/pedro/.zshrc')
-
+   
         with contrib.sudo:
             print("Copying .zshrc to root folder...")
             cp('configs/root.zshrc', '/root/.zshrc')
-        
         
     except Exception as error:
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
         return
     return
-'''
 
 
 # Functino to remove items. Used by packages e flatpak function

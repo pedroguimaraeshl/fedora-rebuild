@@ -6,12 +6,14 @@
 # Date: 2025-01-22
 # Version: 0.1
 
+# >> Missing <<
+# oh-my-zsh
+# Multimidia group
 # NVIDIA
-
 # extensions
 # extensions config
-
 # fedora config text
+# menu
 
 # Importing os.system module
 from os import system
@@ -32,7 +34,7 @@ import packages as packages
 #packages.better_fonts()
 #packages.vscode()
 
-##packages.oh_my_zsh()
+packages.oh_my_zsh()
 
 #packages.install_packages()
-packages.install_flatpaks()
+#packages.install_flatpaks()
