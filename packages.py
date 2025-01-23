@@ -124,6 +124,7 @@ def oh_my_zsh():
 
         print("Copying .zshrc to user folder...")
         print(command('pwd'))
+        print(ls())
         cp('files/piotrek.zshrc', '~/.zshrc')
    
         with contrib.sudo:
