@@ -8,6 +8,7 @@
 
 
 from sh import contrib, command, cp
+from os import system
 
 
 # Function to install ASUS ROG Gui and Asusctl packages
@@ -116,7 +117,8 @@ def oh_my_zsh():
 
         with contrib.sudo:
             print("Installing zsh...")
-            command('dnf', 'install', 'zsh', '-y', _fg=True) 
+            system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
+            #command('dnf', 'install', 'zsh', '-y', _fg=True) 
         
         print("Installing oh-my-zsh for current user...")
         command('sh', '-c', CURL_COMMAND, _fg=True)
