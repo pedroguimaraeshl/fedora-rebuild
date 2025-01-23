@@ -123,7 +123,7 @@ def oh_my_zsh():
         system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
 
         print("Copying .zshrc to user folder...")
-        cp('files/piotrek.zshrc', '/home/pedro/.zshrc')
+        cp('files/piotrek.zshrc', '~/.zshrc')
    
         with contrib.sudo:
             print("Copying .zshrc to root folder...")
