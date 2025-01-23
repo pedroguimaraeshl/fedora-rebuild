@@ -103,10 +103,13 @@ def vscode():
 # Function to install oh-my-zsh
 def oh_my_zsh():
     # OH-MY-ZSH CONSTANTS
-    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' + ' "" ' + '--unattended'
+    #CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' + ' "" ' + '--unattended'
+    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
 
     print(">> OH-MY-ZSH  CONFIG <<")
     print("Installing oh-my-zsh...")
+
+    print(CURL_COMMAND)
 
     try:
         print("Enter sudo password to install oh-my-zsh")
@@ -116,7 +119,7 @@ def oh_my_zsh():
             command('dnf', 'install', 'zsh', '-y', _fg=True) 
         
         print("Installing oh-my-zsh for current user...")
-        command('sh', '-c', CURL_COMMAND + ')"')
+        command('sh', '-c', CURL_COMMAND, '""', '--unattended', _fg=True)
 
         print("Copying .zshrc to user folder...")
         cp('configs/piotrek.zshrc', '/home/pedro/.zshrc')
