@@ -43,7 +43,7 @@ def dnf5():
 
 
 # Function to configure GRUB before NVIDIA installation
-def grub_before_nvidia(screen_res):
+def grub(screen_res):
     # GRUB CONSTANTS
     GRUB_FILE = '/etc/default/grub'
     GRUB_CFG = ('GRUB_TIMEOUT=30', \

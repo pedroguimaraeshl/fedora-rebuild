@@ -28,7 +28,7 @@ import packages as packages
 
 
 #configs.dnf5()
-#configs.grub_before_nvidia("fullhd")
+#configs.grub("fullhd")
 #configs.change_dns()
 #packages.asus()
 #packages.better_fonts()
