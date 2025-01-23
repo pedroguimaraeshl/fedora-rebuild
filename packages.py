@@ -129,6 +129,8 @@ def oh_my_zsh():
             print("Copying .zshrc to root folder...")
             cp('files/root.zshrc', '/root/.zshrc')
         
+        print("WARNING: Do not forget to change default shell for users in /etc/passwd.")        
+        print("SUCCESS: zsh and oh-my-zsh was successfully installed.")
     except Exception as error:
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
         return
