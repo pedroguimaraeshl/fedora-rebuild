@@ -1,19 +1,23 @@
-#/bin/bash
+#!/bin/bash
 
-echo "Running run_first.sh"
-
-echo "Checking if virtual environment exists"
+# Check if virtual environment exists (venv or .venv)
 if [ -d venv ] || [ -d .venv ]; then
-    echo "Enabling virtual environment"
-    source venv/bin/activate
-    echo "Sucess"
+    echo "Enabling virtual environment..."
+    source_cmd="venv/bin/activate"
+    
+    if ! [ -d "venv" ]; then
+        source_cmd=".venv/bin/activate"
+    fi
+  
+    source "$source_cmd"
+    echo "Success!"
+
+    # Check for the --install flag and install dependencies if present
+    if [[ "$#" -gt 0 ]] && [[ "$1" == "--install" ]]; then
+        echo "Installing dependencies..."
+        pip install -r requirements.txt
+        echo "Dependencies installed."
+    fi
 else
-    echo "Creating virtual environment"
-    python -m venv venv
-
-    echo "Activating virtual environment"
-    source venv/bin/activate
-
-    echo "Installing requirements"
-    pip install -r requirements.txt
+    echo "No virtual environment found."
 fi

@@ -20,17 +20,13 @@ try:
 
     if path.isdir(folder):
         print("Enabling virtual environment...")
-        system('source venv/bin/activate')
-        print("Sucess")
+        system('sh ./run_first.sh')
     else:
         print("Creating virtual environment...")
         system('python -m venv venv')
 
         print("Enabling virtual environment...")
-        system('source venv/bin/activate')
-
-        print("Installing requirements...")
-        system('pip install -r requirements.txt')   
+        system('sh ./run_first.sh --install') 
 except OSError as error:
     print(f"ERROR: Can not install or enable virtual environment: {error}")
 
