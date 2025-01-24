@@ -103,29 +103,22 @@ def vscode():
 
 # Function to install oh-my-zsh
 def oh_my_zsh():
-    # OH-MY-ZSH CONSTANTS
-    CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' + ' "" ' + '--unattended'
-    #CURL_COMMAND = '"' + '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
-
     print(">> OH-MY-ZSH  CONFIG <<")
     print("Installing oh-my-zsh...")
-
-    print(CURL_COMMAND)
 
     try:
         print("Enter sudo password to install oh-my-zsh")
 
-        with contrib.sudo:
+        '''with contrib.sudo:
             print("Installing zsh...")
-            command('dnf', 'install', 'zsh', '-y', _fg=True) 
+            command('dnf', 'install', 'zsh', '-y', _fg=True)'''
         
         print("Installing oh-my-zsh for current user...")
         system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
 
         print("Copying .zshrc to user folder...")
-        print(command('pwd'))
-        print(ls())
-        cp('files/piotrek.zshrc', '~/.zshrc')
+        user = command('whoami')
+        cp('files/users.zshrc', '/home/' + user.strip() + '/.zshrc')
    
         with contrib.sudo:
             print("Copying .zshrc to root folder...")
