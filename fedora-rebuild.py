@@ -7,19 +7,34 @@
 # Version: 0.1
 
 # >> Missing <<
-# oh-my-zsh
-# Multimidia group
 # NVIDIA
-# extensions
 # extensions config
 # fedora config text
 # menu
 
 # Importing os.system module
-from os import system
+from os import system, path
 
+try:
+    folder = "venv"
 
-system('sh ./run_first.sh')
+    if path.isdir(folder):
+        print("Enabling virtual environment...")
+        system('source venv/bin/activate')
+        print("Sucess")
+    else:
+        print("Creating virtual environment...")
+        system('python -m venv venv')
+
+        print("Enabling virtual environment...")
+        system('source venv/bin/activate')
+
+        print("Installing requirements...")
+        system('pip install -r requirements.txt')   
+except OSError as error:
+    print(f"ERROR: Can not install or enable virtual environment: {error}")
+
+#system('sh ./run_first.sh')
 
 
 # Import project python files
@@ -33,8 +48,6 @@ import packages as packages
 #packages.asus()
 #packages.better_fonts()
 #packages.vscode()
-
-packages.oh_my_zsh()
-
+#packages.oh_my_zsh()
 #packages.install_packages()
-#packages.install_flatpaks()
+packages.install_flatpaks()

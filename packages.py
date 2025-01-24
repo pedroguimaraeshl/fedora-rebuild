@@ -128,7 +128,7 @@ def oh_my_zsh():
             cp('files/root.zshrc', '/root/.zshrc')
         
         print("WARNING: Do not forget to change default shell for users in /etc/passwd.")        
-        print("SUCCESS: zsh and oh-my-zsh was successfully installed.")
+        print("SUCCESS: zsh and oh-my-zsh successfully installed.")
     except Exception as error:
         print(f"ERROR: Can not configure or install oh-my-zsh: {error}")
         return
@@ -227,7 +227,7 @@ def install_packages():
                 items_list.extend(custom_pkgs)
                 items_list.sort()
         
-    print("Installing packages...")
+    print("\nInstalling packages...")
     with contrib.sudo:
         try:
             command('dnf', 'install', items_list, '-y', _fg=True)
@@ -241,11 +241,14 @@ def install_packages():
 # Function to install flatpaks
 def install_flatpaks():
     custom_flatpaks = []
-    flatpak_list = ['com.adobe.Reader','com.bitwarden.desktop','com.discordapp.Discord','com.jetbrains.IntelliJ-IDEA-Community', \
-                  'com.mattjakeman.ExtensionManager','com.opera.Opera','com.protonvpn.www','com.spotify.Client','de.haeckerfelix.Fragments', \
-                  'io.dbeaver.DBeaverCommunity','org.ferdium.Ferdium','org.nickvision.tubeconverter','us.zoom.Zoom']
+    flatpak_list = ['com.adobe.Reader','com.bitwarden.desktop','com.discordapp.Discord','com.github.unrud.VideoDownloader', \
+                    'com.jetbrains.IntelliJ-IDEA-Community','com.mattjakeman.ExtensionManager','com.opera.Opera','com.spotify.Client', \
+                    'de.haeckerfelix.Fragments','io.dbeaver.DBeaverCommunity','org.ferdium.Ferdium','us.zoom.Zoom']
     
     print(">> FLATPAK CONFIG <<")
+    print("Enabling flathub (if not exists)...")
+    command('flatpak', 'remote-add', '--if-not-exists', 'flathub', 'https://dl.flathub.org/repo/flathub.flatpakrepo')
+
     print("List of default packages to install by Application ID:")
     for idx in range(len(flatpak_list)):
         print(f"{idx + 1}: {flatpak_list[idx]}")
@@ -315,11 +318,30 @@ def install_flatpaks():
                 flatpak_list.extend(custom_flatpaks)
                 flatpak_list.sort()
         
-    print("Installing packages...")
+    print("\nInstalling packages...")
     try:
         command('flatpak', 'install', flatpak_list, '-y', _fg=True)
         print("SUCCESS: Flatpak packages installed successfully...")
     except Exception as error:
         print(f"ERROR: Can not install flatpak packages: {error}")
     
+    return
+
+
+# Function to install multimedia group with DNF5
+def multimedia_group():
+    print(">> MULTIMEDIA GROUP CONFIG <<")
+    print("Installing multimedia group packages...")
+
+    try:
+        print("Enter sudo password to install multimedia group packages")
+
+        with contrib.sudo:
+            print("Installing multimedia group packages...")
+            command('dnf', 'group', 'install', 'multimedia', '-y', _fg=True)
+
+            print("SUCCESS: Multimedia group packages successfully installed...")
+    except Exception as error:
+        print(f"ERROR: Can not install multimedia group packages: {error}")
+        return
     return
