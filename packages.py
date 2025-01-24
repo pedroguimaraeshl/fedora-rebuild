@@ -109,9 +109,9 @@ def oh_my_zsh():
     try:
         print("Enter sudo password to install oh-my-zsh")
 
-        '''with contrib.sudo:
+        with contrib.sudo:
             print("Installing zsh...")
-            command('dnf', 'install', 'zsh', '-y', _fg=True)'''
+            command('dnf', 'install', 'zsh', '-y', _fg=True)
         
         print("Installing oh-my-zsh for current user...")
         system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
@@ -121,6 +121,9 @@ def oh_my_zsh():
         cp('files/users.zshrc', '/home/' + user.strip() + '/.zshrc')
    
         with contrib.sudo:
+            print("Installing oh-my-zsh for root...")
+            system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
+
             print("Copying .zshrc to root folder...")
             cp('files/root.zshrc', '/root/.zshrc')
         
