@@ -122,7 +122,7 @@ def oh_my_zsh():
    
         with contrib.sudo:
             print("Installing oh-my-zsh for root...")
-            system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
+            system('sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
 
             print("Copying .zshrc to root folder...")
             cp('files/root.zshrc', '/root/.zshrc')
