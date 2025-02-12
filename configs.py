@@ -136,6 +136,6 @@ def change_dns():
                 command('nmcli', 'connection', 'modify', conn_name, 'ipv6.dns', custom_ipv6_dns)
                 
         print("SUCCESS: DNS configuration completed")
-    except EnvironmentError as error:
+    except Exception as error:
         print(f"ERROR: DNS configuration failed: {error}")
         return

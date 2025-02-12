@@ -26,7 +26,9 @@ try:
         system('python -m venv venv')
 
         print("Enabling virtual environment...")
-        system('sh ./run_first.sh --install') 
+        system('source venv/bin/activate')
+        system('pip install -r requirements.txt')
+        #system('sh ./run_first.sh --install') 
 except OSError as error:
     print(f"ERROR: Can not install or enable virtual environment: {error}")
 
@@ -46,4 +48,5 @@ import packages as packages
 #packages.vscode()
 #packages.oh_my_zsh()
 #packages.install_packages()
-packages.install_flatpaks()
+#packages.install_flatpaks()
+packages.multimedia_group()

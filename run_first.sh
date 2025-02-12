@@ -2,7 +2,6 @@
 
 # Check if virtual environment exists (venv or .venv)
 if [ -d venv ] || [ -d .venv ]; then
-    echo "Enabling virtual environment..."
     source_cmd="venv/bin/activate"
     
     if ! [ -d "venv" ]; then
